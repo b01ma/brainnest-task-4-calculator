@@ -115,7 +115,7 @@ function toCalculate(firstOperand, secondOperand, operator) {
     return firstOperand - secondOperand;
   } else if (operator === "*") {
     return firstOperand * secondOperand;
-  } else if (operator === "/") {
+  } else if (operator === "%") {
     return firstOperand / secondOperand;
   }
 
