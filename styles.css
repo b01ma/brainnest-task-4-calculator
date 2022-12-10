@@ -54,6 +54,8 @@ body {
     text-align: end;
     font-size: 50px;
     width: 100%;
+
+    border: none;
 }
 
 .button-container {

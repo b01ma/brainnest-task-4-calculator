@@ -30,12 +30,9 @@ function onBtnClick(event) {
     showOnDisplay();
   }
 
-  if (target.classList.contains("sign-equel")) {
-    console.log(target.value);
-  }
-
   if (target.classList.contains("button-ac")) {
-    console.log(target.value);
+    resetCalculator();
+    showOnDisplay();
   }
 
   if (target.classList.contains("sign-negative")) {
@@ -45,10 +42,6 @@ function onBtnClick(event) {
   if (target.classList.contains("sign-dot")) {
     inputDot(target.value);
     showOnDisplay();
-  }
-
-  if (target.classList.contains("sign-equal")) {
-    console.log(target.value);
   }
 }
 
@@ -69,14 +62,27 @@ function inputNumber(number) {
 }
 
 function inputDot(dot) {
+  if (calculator.waitingForSecondOperand === true) {
+    calculator.valueToDisplay = "0.";
+    calculator.waitingForSecondOperand = false;
+    return;
+  }
+
   if (!calculator.valueToDisplay.includes(dot)) {
     calculator.valueToDisplay += dot;
   }
 }
 
 function inputOperator(operatorFromInput) {
-  const { firstOperand, valueToDisplay, operator } = calculator;
+  const { firstOperand, valueToDisplay, operator, waitingForSecondOperand } =
+    calculator;
   const inputValue = parseFloat(valueToDisplay);
+
+  if (operator && waitingForSecondOperand) {
+    calculator.operator = operatorFromInput;
+    console.log(calculator);
+    return;
+  }
 
   if (firstOperand === null && !isNaN(inputValue)) {
     calculator.firstOperand = inputValue;
@@ -106,4 +112,13 @@ function toCalculate(firstOperand, secondOperand, operator) {
   }
 
   return secondOperand;
+}
+
+function resetCalculator() {
+  calculator.valueToDisplay = 0;
+  calculator.firstOperand = null;
+  calculator.operator = null;
+  calculator.waitingForSecondOperand = false;
+
+  console.log(calculator);
 }
